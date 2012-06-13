@@ -2,10 +2,15 @@
 // http://documentcloud.github.com/backbone/#Sync
 
 var express = require('express'), 
-	app = express.createServer(express.bodyParser()), 
+	app = express.createServer(), 
 	idCounter = 0, 
 	data = {},
 	_ = require('underscore');
+
+app.configure(function () {
+	app.use(express.bodyParser());
+	app.use(allowCrossDomain);
+});
 
 // create -> POST /collection
 app.post('/:collection', function(req, res){
@@ -68,4 +73,12 @@ function findModel(collection, id) {
 	return _(data[collection]).find(function (m) {
 		return m.id === parseInt(id);
 	});
+}
+
+function allowCrossDomain(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
 }
