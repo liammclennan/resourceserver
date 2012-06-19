@@ -1,0 +1,19 @@
+{
+  "author": "Liam McLennan <liam.mclennan@gmail.com>",
+  "name": "rasterver",
+  "description": "Restful in-memory server for Backbone.js",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/liammclennan/backbone-server.git"
+  },
+  "dependencies": {
+      "underscore": "*",
+      "express": "*"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  }
+}
