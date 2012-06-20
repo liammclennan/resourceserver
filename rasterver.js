@@ -53,7 +53,7 @@ app.delete('/:collection/:id', function (req,res) {
 	res.send(200);
 });
 
-app.listen(3000);
+app.listen(3002);
 
 function removeModel(collection, id) {
 	if (!data[collection]) {
