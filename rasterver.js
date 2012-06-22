@@ -12,9 +12,17 @@ app.configure(function () {
 	app.use(allowCrossDomain);
 });
 
+app.get("/:collection", function(req, res) {
+  console.log('create ' + req.params.collection);
+  data[req.params.collection] = data[req.params.collection] || [];
+
+  res.send(data[req.params.collection]);
+});
+
 // create -> POST /collection
 app.post('/:collection', function(req, res){
   console.log('create ' + req.params.collection);
+  console.log(req.body.id);
   req.body.id = idCounter++;
   data[req.params.collection] = data[req.params.collection] || [];
   data[req.params.collection].push(req.body);
