@@ -19,4 +19,4 @@ Usage
 
 1. Start the server with `node rasterver.js`
 
-1. Configure your models / collections with urls in the form `http://localhost:3000/[collectionname]`
+1. Configure your models / collections with urls in the form `http://localhost:3002/[collectionname]`
