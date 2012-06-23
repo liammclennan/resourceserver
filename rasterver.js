@@ -13,7 +13,7 @@ app.configure(function () {
 });
 
 app.get("/:collection", function(req, res) {
-  console.log('create ' + req.params.collection);
+  console.log('read ' + req.params.collection);
   data[req.params.collection] = data[req.params.collection] || [];
 
   res.send(data[req.params.collection]);
