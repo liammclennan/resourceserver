@@ -24,5 +24,5 @@ Usage
 P.S.
 ----
 
-For truly zero-config usage I run a hosted instance of backbone-server at http://withouttheloop.com:3002. Set your models url to `http://withouttheloop.com:3002/[some unique collection id]` and it will work magically. I do occassionally restart the service so not recommended for production. ;)
+For truly zero-config usage I run a hosted instance of backbone-server at http://withouttheloop.com:3002. Set your model's url to `http://withouttheloop.com:3002/[some unique collection id]` and it will work magically. I do occassionally restart the service so not recommended for production. ;)
 
