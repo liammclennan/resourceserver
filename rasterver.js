@@ -14,6 +14,10 @@ app.configure(function () {
 
 app.get("/:collection", function(req, res) {
   console.log('read ' + req.params.collection);
+  if (!data[req.params.collection]) {
+    res.send(404);
+    return;
+  }
   data[req.params.collection] = data[req.params.collection] || [];
 
   res.send(data[req.params.collection]);
@@ -39,7 +43,7 @@ app.get('/:collection/:id?', function (req,res) {
 	}
 
 	var model = findModel(req.params.collection, req.params.id);
-	if (!model) {
+	if (!model && req.params.id) {
 		res.send('cant find model ' + req.params.id, 404);
 		return;	
 	}
