@@ -2,7 +2,7 @@
 // http://documentcloud.github.com/backbone/#Sync
 
 var express = require('express'), 
-	app = express.createServer(), 
+	app = express(), 
 	idCounter = 0, 
 	data = {},
 	_ = require('underscore');
