@@ -24,11 +24,10 @@ Usage
 Examples
 --------
 
-### Create a new 'people' resource:
+### Create a new 'people' resource
 
 ```
 curl -vX POST [{"name":"X POST http://withouttheloop.com:3002/people -H 'content-type: application/json' -d '{"name":"Liam", "age": 72}'
-```
 
 < HTTP/1.1 200 OK
 < X-Powered-By: Express
@@ -42,8 +41,28 @@ curl -vX POST [{"name":"X POST http://withouttheloop.com:3002/people -H 'content
 < 
 * Connection #0 to host withouttheloop.com left intact
 * Closing connection #0
-{"id":1}
+{"id":0}
+```
 
+### Read the collection
+
+```
+curl -v http://withouttheloop.com:3002/people
+
+< HTTP/1.1 200 OK
+< X-Powered-By: Express
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET,PUT,POST,DELETE
+< Access-Control-Allow-Headers: Content-Type
+< Content-Type: application/json; charset=utf-8
+< Content-Length: 65
+< Date: Tue, 29 Jan 2013 07:20:57 GMT
+< Connection: keep-alive
+< 
+* Connection #0 to host withouttheloop.com left intact
+* Closing connection #0
+[{"name":"Liam","age":72,"id":0}
+```
 
 
 
