@@ -13,6 +13,11 @@ app.configure(function () {
     app.use(allowCrossDomain);
 });
 
+app.options("*", function (req, res) {
+	res.header('Allow', 'OPTIONS,GET,PUT,POST,DELETE');
+	res.send();
+});
+
 app.get("/:collection", function(req, res) {
     console.log('read ' + req.params.collection);
     if (!data[req.params.collection]) {
