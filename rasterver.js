@@ -13,6 +13,11 @@ app.configure(function () {
     app.use(allowCrossDomain);
 });
 
+app.options("*", function (req, res) {
+	res.header('Allow', 'OPTIONS,GET,PUT,POST,DELETE');
+	res.send();
+});
+
 app.get("/:collection", function(req, res) {
     console.log('read ' + req.params.collection);
     if (!data[req.params.collection]) {
@@ -53,14 +58,14 @@ app.put('/:collection/:id', function (req,res) {
     console.log('update ' + req.params.collection + ' - ' + req.params.id);
     removeModel(req.params.collection, req.params.id);
     data[req.params.collection].push(req.body);
-    res.send(200);
+    res.send();
 });
 
 // delete -> DELETE /collection/id
 app.delete('/:collection/:id', function (req,res) {
     console.log('delete ' + req.params.collection + ' - ' + req.params.id);
     removeModel(req.params.collection, req.params.id);
-    res.send(200);
+    res.send();
 });
 
 app.listen(port);
