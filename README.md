@@ -17,7 +17,7 @@ Usage
 
 1. Install the dependencies with `npm install`
 
-1. Start the server with `node rasterver.js`
+1. Start the server with `node resourceserver.js`
 
 1. Configure your models / collections with urls in the form `http://localhost:3002/[collectionname]`
 
