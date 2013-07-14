@@ -54,24 +54,46 @@ describe('data', function () {
     });
 
     describe('all', function () {
-      it('should give all resources', function() {
-        assert.equal(2, data.all(collectionName).length);
+      it('should give all resources', function(done) {
+        data.all(collectionName).then(function (c) {
+          assert.equal(c.length, 2);  
+        }).then(function () {
+          done();
+        }, function (e) {
+          done(e);
+        });        
       });
-      it('they should have non-identical ids', function () {
+      it('they should have non-identical ids', function (done) {
         var resources = data.all(collectionName);
-        assert(resources[0].id != resources[1].id);
+        resources.then(function (c) {
+          assert(c[0].id != c[1].id);  
+        }).then(function () {
+          done();
+        }, function (e) {
+          done(e);
+        });        
       })
     });
 
     describe('update 1', function () {
-      before(function () {
-        data.update(collectionName, 1, {
+      var p;
+      before(function (done) {
+        p = data.update(collectionName, 1, {
           a: 1, b: 'updated'
         });
+        p.then(function() {
+          done();
+        });
       });
-      it('should have updated 1', function () {
+      it('should have updated 1', function (done) {
         var r = data.get(collectionName, 1);
-        assert.equal('updated', r.b);
+        r.then(function (el) {
+          assert.equal('updated', el.b);          
+        }).then(function () {
+          done();
+        }, function (e) {
+          done(e);
+        })
       });
     });
 
