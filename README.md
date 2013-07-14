@@ -3,7 +3,7 @@ Resourceserver
 
 Implements an in-memory resource oriented HTTP server, provding 5 basic operations (shown in curl_tests.sh):
 
-### POST /people
+### POST /:collection
 
 Create a new resource.
 
@@ -31,9 +31,9 @@ curl -vX POST http://localhost:3002/people -H 'content-type: application/json' -
 }
 ```
 
-### GET /people/1
+### GET /:collection/:id
 
-Retrieve the `people` resource with id 1.
+Retrieve the `:collection` resource with id `:id`.
 
 ```
 curl -v http://localhost:3002/people/1
@@ -47,9 +47,9 @@ curl -v http://localhost:3002/people/1
 }
 ```
 
-### GET /people
+### GET /:collection
 
-Retrieve an array of all people resources.
+Retrieve an array of all `:collection` resources.
 
 ```
 curl -v http://localhost:3002/people
@@ -70,9 +70,9 @@ curl -v http://localhost:3002/people
 ]
 ```
 
-### PUT /people/1
+### PUT /:collection/:id
 
-Override the `people` resource with id 1.
+Override the `:collection` resource with id `:id`.
 
 ```
 curl -vX PUT http://localhost:3002/people/1 -H 'content-type: application/json' -d '{"name": "LiamO", "age": 30}'
@@ -86,9 +86,9 @@ curl -vX PUT http://localhost:3002/people/1 -H 'content-type: application/json' 
 }
 ```
 
-### DELETE /people/1
+### DELETE /:collection/:id
 
-Delete the `people` resource with id 1.
+Delete the `:collection` resource with id `:id`.
 
 ```
 curl -vX DELETE http://localhost:3002/people/1
