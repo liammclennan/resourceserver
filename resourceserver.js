@@ -3,11 +3,14 @@
 
 var express = require('express'),
     app = express(),
-    idCounter = 0,
+    idCounter = 1,
     data = {},
+    persist = require('./persist'),
     port = 3002,
     _ = require('underscore'),
-    redisclient = require('then-redis')
+    redisclient = require('then-redis'),
+    coffee = require('coffee-script'),
+    log = require('./logger')
     ;
 
 app.configure(function () {
@@ -16,61 +19,44 @@ app.configure(function () {
 });
 
 app.get("/:collection", function(req, res) {
-    console.log('read ' + req.params.collection);
-    if (!data[req.params.collection]) {
-        return res.send(404);
-    }
-
-    data[req.params.collection] = data[req.params.collection] || [];
-    res.send(data[req.params.collection]);
+    log.info('read ' + req.params.collection);
+    res.send(persist.all(req.params.collection));
 });
 
 // create -> POST /collection
 app.post('/:collection', function(req, res){
-    console.log('create ' + req.params.collection);
-    console.log(req.body);
-    req.body.id = idCounter++;
-    data[req.params.collection] = data[req.params.collection] || [];
-    data[req.params.collection].push(req.body);
-    res.send({ id: req.body.id });
+    log.info('create ' + req.params.collection + '\n' + req.body);
+
+    var withId = persist.insert(req.params.collection, req.body);
+    res.send(withId);
 });
 
 // read -> GET /collection[/id]
 app.get('/:collection/:id?', function (req,res) {
-    console.log('read ' + (req.params.id || ('collection ' + req.params.collection)));
+    log.info('read ' + (req.params.id || ('collection ' + req.params.collection)));
 
-    if (data[req.params.collection] && !req.params.id) {
-        return res.send(data[req.params.collection]);
-    }
-
-    var model = findModel(req.params.collection, req.params.id);
-    if (!model && req.params.id) {
-        return res.send('cant find model ' + req.params.id, 404);
-    }
-    res.send(model);
+    res.send(persist.get(req.params.collection, req.params.id));
 });
 
 // update -> PUT /collection/id
 app.put('/:collection/:id', function (req,res) {
-    console.log('update ' + req.params.collection + ' - ' + req.params.id);
-    removeModel(req.params.collection, req.params.id);
-    data[req.params.collection].push(req.body);
-    res.send(200);
+    persist.update(req.params.collection, req.params.id, req.body);
+    res.send(persist.get(req.params.collection, req.params.id));
 });
 
 // delete -> DELETE /collection/id
 app.delete('/:collection/:id', function (req,res) {
-    console.log('delete ' + req.params.collection + ' - ' + req.params.id);
-    removeModel(req.params.collection, req.params.id);
+    log.info('delete ' + req.params.collection + ' - ' + req.params.id);
+    persist.delete(req.params.collection, req.params.id);
     res.send(200);
 });
 
 app.listen(port);
-console.log('Backbone-server started at port %d.', port);
+log.info('Backbone-server started at port %d.', port);
 
 function removeModel(collection, id) {
     if (!data[collection]) {
-        console.log('cant find collection ' + collection);
+        log.info('cant find collection ' + collection);
         return;
     }
     data[collection] = _(data[collection]).reject(function (model) {
@@ -80,7 +66,7 @@ function removeModel(collection, id) {
 
 function findModel(collection, id) {
     if (!data[collection]) {
-        console.log('cant find collection ' + collection);
+        log.info('cant find collection ' + collection);
         return;
     }
     return _(data[collection]).find(function (m) {

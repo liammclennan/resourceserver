@@ -2,19 +2,26 @@
   "author": "Liam McLennan <liam.mclennan@gmail.com>",
   "name": "resourceserver",
   "description": "Restful in-memory server for Backbone.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/liammclennan/backbone-server.git"
   },
   "dependencies": {
       "underscore": "*",
-      "express": "*"
+      "express": "*",
+      "winston": "*",
+      "coffee-script": "*",
+      "request": "*",
+      "then-redis": "*",
+      "dbc": "*"
   },
   "scripts": {
     "start": "node resourceserver"  
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "*"  
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "*"
