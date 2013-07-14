@@ -1,7 +1,9 @@
 Resourceserver
 ===============
 
-Implements an in-memory resource oriented HTTP server, provding 5 basic operations (shown in curl_tests.sh):
+TODO: Implement a persistent version (probably using redis).
+
+Implements an in-memory resource oriented HTTP server, provding 5 basic operations (shown in curl_tests.sh)
 
 ### POST /:collection
 
