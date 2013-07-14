@@ -56,7 +56,34 @@ curl -vX POST http://localhost:3002/people -H 'content-type: application/json' -
 ```
 curl -vX POST http://localhost:3002/people -H 'content-type: application/json' -d '{"name": "Noah", "age": 1}'
 ```
+
+> {
+  "name": "Noah",
+  "age": 1,
+  "id": 2
+}
+
+```
 curl -v http://localhost:3002/people
+```
+
+```
+> [
+  {
+    "name": "Liam",
+    "age": 29,
+    "id": 1
+  },
+  {
+    "name": "Noah",
+    "age": 1,
+    "id": 2
+  }
+]
+```
+
+
+
 curl -v http://localhost:3002/people/1
 curl -vX PUT http://localhost:3002/people/1 -H 'content-type: application/json' -d '{"name": "LiamO", "age": 30}'
 curl -v http://localhost:3002/people/1
