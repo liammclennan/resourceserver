@@ -3,8 +3,8 @@
 var coffee = require('coffee-script'),
     express = require('express'),
     app = express(),
-    // persist = require('./persist'),
-    persist = require('./redispersist'),
+    config = require('./config')
+    persist = config.use_redis ? require('./redispersist') : require('./persist'),
     port = 3002,
     _ = require('underscore'),
     log = require('./logger')
