@@ -1,10 +1,27 @@
-backbone-server
+Resourceserver
 ===============
 
-Implements an in-memory server for Backbone.js
-http://documentcloud.github.com/backbone/#Sync
+Implements an in-memory resource oriented HTTP server, provding 5 basic operations:
 
-This project is a teaching aid. It provides an out-of-the-box server that Backbone.js models can sync with.
+### POST /people
+
+Create a new resource.
+
+### GET /people/1
+
+Retrieve the `people` resource with id 1.
+
+### PUT /people/1
+
+Override the `people` resource with id 1.
+
+### DELETE /people/1
+
+Delete the `people` resource with id 1.
+
+### GET /people
+
+Retrieve an array of all people resources.
 
 It uses the [CORS headers](https://developer.mozilla.org/en/http_access_control) to allow cross-origin requests.
 
@@ -17,57 +34,34 @@ Usage
 
 1. Install the dependencies with `npm install`
 
-1. Start the server with `node resourceserver.js`
+1. Start the server with `npm start`
 
-1. Configure your models / collections with urls in the form `http://localhost:3002/[collectionname]`
+1. `cd test && ./curl_tests.sh`
 
 Examples
 --------
 
-### Create a new 'people' resource
+The file `test/curl_tests.sh` describes the basic operations provided by resourceserver. 
 
 ```
-curl -vX POST [{"name":"X POST http://withouttheloop.com:3002/people -H 'content-type: application/json' -d '{"name":"Liam", "age": 72}'
-
-< HTTP/1.1 200 OK
-< X-Powered-By: Express
-< Access-Control-Allow-Origin: *
-< Access-Control-Allow-Methods: GET,PUT,POST,DELETE
-< Access-Control-Allow-Headers: Content-Type
-< Content-Type: application/json; charset=utf-8
-< Content-Length: 8
-< Date: Tue, 29 Jan 2013 07:19:00 GMT
-< Connection: keep-alive
-< 
-* Connection #0 to host withouttheloop.com left intact
-* Closing connection #0
-{"id":0}
+curl -vX POST http://localhost:3002/people -H 'content-type: application/json' -d '{"name": "Liam", "age": 29}'
 ```
 
-### Read the collection
+> {
+  "name": "Liam",
+  "age": 29,
+  "id": 2
+}
 
 ```
-curl -v http://withouttheloop.com:3002/people
-
-< HTTP/1.1 200 OK
-< X-Powered-By: Express
-< Access-Control-Allow-Origin: *
-< Access-Control-Allow-Methods: GET,PUT,POST,DELETE
-< Access-Control-Allow-Headers: Content-Type
-< Content-Type: application/json; charset=utf-8
-< Content-Length: 65
-< Date: Tue, 29 Jan 2013 07:20:57 GMT
-< Connection: keep-alive
-< 
-* Connection #0 to host withouttheloop.com left intact
-* Closing connection #0
-[{"name":"Liam","age":72,"id":0}
+curl -vX POST http://localhost:3002/people -H 'content-type: application/json' -d '{"name": "Noah", "age": 1}'
+```
+curl -v http://localhost:3002/people
+curl -v http://localhost:3002/people/1
+curl -vX PUT http://localhost:3002/people/1 -H 'content-type: application/json' -d '{"name": "LiamO", "age": 30}'
+curl -v http://localhost:3002/people/1
+curl -vX DELETE http://localhost:3002/people/1
+curl -v http://localhost:3002/people
 ```
 
-
-
-P.S.
-----
-
-For truly zero-config usage I run a hosted instance of backbone-server at http://withouttheloop.com:3002. Set your model's url to `http://withouttheloop.com:3002/[some unique collection id]` and it will work magically. I do occassionally restart the service so not recommended for production. ;)
-
+The output of t

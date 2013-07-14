@@ -1,14 +1,10 @@
-// Implements an in-memory server for Backbone.js
-// http://documentcloud.github.com/backbone/#Sync
+// Implements an in-memory resource server
 
 var express = require('express'),
     app = express(),
-    idCounter = 1,
-    data = {},
     persist = require('./persist'),
     port = 3002,
     _ = require('underscore'),
-    redisclient = require('then-redis'),
     coffee = require('coffee-script'),
     log = require('./logger')
     ;
@@ -53,26 +49,6 @@ app.delete('/:collection/:id', function (req,res) {
 
 app.listen(port);
 log.info('Backbone-server started at port %d.', port);
-
-function removeModel(collection, id) {
-    if (!data[collection]) {
-        log.info('cant find collection ' + collection);
-        return;
-    }
-    data[collection] = _(data[collection]).reject(function (model) {
-        return model.id === parseInt(id, 10);
-    });
-}
-
-function findModel(collection, id) {
-    if (!data[collection]) {
-        log.info('cant find collection ' + collection);
-        return;
-    }
-    return _(data[collection]).find(function (m) {
-        return m.id === parseInt(id, 10);
-    });
-}
 
 function allowCrossDomain(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
