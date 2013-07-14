@@ -1,6 +1,11 @@
 var data = {}
   , dbc = require('dbc')
   , _ = require('underscore')
+  , q = require('q')
+
+function wrap(v) {
+  return q.fcall(function () {return v;});
+}
 
 module.exports = {
 
@@ -10,13 +15,13 @@ module.exports = {
     var c = getCollection(collectionName);
     var withId = _.extend(resource, {id: nextId(c)});
     c.push(withId);
-    return withId;
+    return wrap(withId);
   },
 
   all: function (collectionName) {
     validateCollectionName(collectionName);
     var c = getCollection(collectionName);
-    return c;
+    return wrap(c);
   },
 
   get: function (collectionName, id) {
@@ -26,7 +31,7 @@ module.exports = {
       return r.id == id;
     });
     dbc.assert(resource && (typeof resource) === 'object');
-    return resource;
+    return wrap(resource);
   },
 
   update: function (collectionName, id, resource) {
@@ -35,7 +40,9 @@ module.exports = {
     data[collectionName] = _.reject(c, function (x) {
       return x.id == id;
     });
-    data[collectionName].push(_.extend(resource, {id: id}));
+    var updated = _.extend(resource, {id: id});
+    data[collectionName].push(updated);
+    return wrap(updated);
   },
 
   delete: function (collectionName, id) {

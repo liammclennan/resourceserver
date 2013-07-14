@@ -1,6 +1,6 @@
 module.exports = 
 
-  use_redis: true
+  use_redis: false
 
   redis_config: 
     host: 'localhost'

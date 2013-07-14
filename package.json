@@ -8,19 +8,20 @@
     "url": "git://github.com/liammclennan/backbone-server.git"
   },
   "dependencies": {
-      "underscore": "*",
-      "express": "*",
-      "winston": "*",
-      "coffee-script": "*",
-      "request": "*",
-      "then-redis": "*",
-      "dbc": "*"
+    "underscore": "*",
+    "express": "*",
+    "winston": "*",
+    "coffee-script": "*",
+    "request": "*",
+    "then-redis": "*",
+    "dbc": "*",
+    "q": "~0.9.6"
   },
   "scripts": {
-    "start": "node resourceserver"  
+    "start": "node resourceserver"
   },
   "devDependencies": {
-    "mocha": "*"  
+    "mocha": "*"
   },
   "optionalDependencies": {},
   "engines": {
