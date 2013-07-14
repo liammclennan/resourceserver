@@ -17,33 +17,48 @@ app.configure(function () {
 
 app.get("/:collection", function(req, res) {
     log.info('read ' + req.params.collection);
-    res.send(persist.all(req.params.collection));
+    
+    persist.all(req.params.collection).then(function (c) {
+        res.send(c);
+    }, function (e) {
+        res.send(500, e);
+    });
 });
 
 // create -> POST /collection
 app.post('/:collection', function(req, res){
     log.info('create ' + req.params.collection + '\n' + req.body);
 
-    var withId = persist.insert(req.params.collection, req.body);
-    res.send(withId);
+    persist.insert(req.params.collection, req.body).then(function (withId) {
+        res.send(withId);
+    }, function (e) {
+        res.send(500, e);
+    });        
 });
 
 // read -> GET /collection[/id]
 app.get('/:collection/:id?', function (req,res) {
     log.info('read ' + (req.params.id || ('collection ' + req.params.collection)));
 
-    res.send(persist.get(req.params.collection, req.params.id));
+    persist.get(req.params.collection, req.params.id).then(function (el) {
+        res.send(el);
+    }, function (e) {
+        res.send(500, e);
+    });
 });
 
 // update -> PUT /collection/id
 app.put('/:collection/:id', function (req,res) {
-    persist.update(req.params.collection, req.params.id, req.body);
-    res.send(persist.get(req.params.collection, req.params.id));
+    log.info('update ' + req.params.collection + ':' + req.params.id);
+
+    updated = persist.update(req.params.collection, req.params.id, req.body);
+    res.send(updated);
 });
 
 // delete -> DELETE /collection/id
 app.delete('/:collection/:id', function (req,res) {
-    log.info('delete ' + req.params.collection + ' - ' + req.params.id);
+    log.info('delete ' + req.params.collection + ':' + req.params.id);
+
     persist.delete(req.params.collection, req.params.id);
     res.send(200);
 });

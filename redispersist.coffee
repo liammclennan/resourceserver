@@ -10,20 +10,27 @@ module.exports =
 
   insert: (collectionName, resource) ->
     client.incr('resource:id').then (nextId) ->
-      client.rpush(build_key(collectionName,nextId), JSON.stringify _.extend(resource, {id: nextId}))
-      build_key(collectionName,nextId)
-    
+      withId = _.extend(resource, {id: nextId})
+      client.hset build_key(collectionName), nextId, JSON.stringify withId
+      withId    
 
   all: (collectionName) ->
-    client.lrange("resource:#{collectionName}", 0, max_results).then (set) ->
+    client.hvals(build_key(collectionName)).then (set) ->
       (for el in set
         JSON.parse el)
 
   get: (collectionName, id) ->
+    client.hget(build_key(collectionName), id).then((el) ->
+      JSON.parse el
+    )
 
   update: (collectionName, id, resource) ->
+    _.extend(resource, {id: id})
+    client.hset(build_key(collectionName), id, JSON.stringify resource)
+    resource
 
   delete: (collectionName, id) ->
+    client.hdel build_key(collectionName), id
 
-build_key = (collectionName, id) ->
+build_key = (collectionName) ->
   "resource:#{collectionName}"
