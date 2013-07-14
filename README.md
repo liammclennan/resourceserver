@@ -3,13 +3,11 @@ Resourceserver
 
 ### TODO: 
 
-1. Implement a persistent version (probably using redis).
-
 1. Add validation
 
 1. Add pre/post hooks 
 
-Implements an in-memory resource oriented HTTP server, provding 5 basic operations (shown in curl_tests.sh)
+Implements an in-memory (or persistent via redis) resource oriented HTTP server, provding 5 basic operations (shown in curl_tests.sh). Edit redis connection config in config.coffee.
 
 ### POST /:collection
 
