@@ -1,7 +1,13 @@
 Resourceserver
 ===============
 
-TODO: Implement a persistent version (probably using redis).
+### TODO: 
+
+1. Implement a persistent version (probably using redis).
+
+1. Add validation
+
+1. Add pre/post hooks 
 
 Implements an in-memory resource oriented HTTP server, provding 5 basic operations (shown in curl_tests.sh)
 
@@ -109,4 +115,4 @@ Usage
 
 1. Start the server with `npm start`
 
-1. `cd test && ./curl_tests.sh`
+1. [Optional] Run tests with `cd test && ./curl_tests.sh`

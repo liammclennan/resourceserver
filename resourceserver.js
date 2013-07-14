@@ -1,11 +1,12 @@
 // Implements an in-memory resource server
 
-var express = require('express'),
+var coffee = require('coffee-script'),
+    express = require('express'),
     app = express(),
-    persist = require('./persist'),
+    // persist = require('./persist'),
+    persist = require('./redispersist'),
     port = 3002,
     _ = require('underscore'),
-    coffee = require('coffee-script'),
     log = require('./logger')
     ;
 
