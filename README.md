@@ -14,7 +14,8 @@ Implements an in-memory (or persistent via redis) resource oriented HTTP server,
 Create a new resource.
 
 ```
-curl -vX POST http://localhost:3002/people -H 'content-type: application/json' -d '{"name": "Liam", "age": 29}'
+curl -vX POST http://localhost:3002/people \
+  -H 'content-type: application/json' -d '{"name": "Liam", "age": 29}'
 ```
 
 ```
@@ -26,7 +27,8 @@ curl -vX POST http://localhost:3002/people -H 'content-type: application/json' -
 ```
 
 ```
-curl -vX POST http://localhost:3002/people -H 'content-type: application/json' -d '{"name": "Noah", "age": 1}'
+curl -vX POST http://localhost:3002/people \
+  -H 'content-type: application/json' -d '{"name": "Noah", "age": 1}'
 ```
 
 ```
@@ -81,7 +83,8 @@ curl -v http://localhost:3002/people
 Override the `:collection` resource with id `:id`.
 
 ```
-curl -vX PUT http://localhost:3002/people/1 -H 'content-type: application/json' -d '{"name": "LiamO", "age": 30}'
+curl -vX PUT http://localhost:3002/people/1 \
+  -H 'content-type: application/json' -d '{"name": "LiamO", "age": 30}'
 ```
 
 ```
