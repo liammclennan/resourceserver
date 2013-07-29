@@ -27,7 +27,7 @@ app.get("/:collection", function(req, res) {
 
 // create -> POST /collection
 app.post('/:collection', function(req, res){
-    log.info('create ' + req.params.collection + '\n' + req.body);
+    log.info('create ' + req.params.collection + '\n' + JSON.stringify(req.body));
 
     persist.insert(req.params.collection, req.body).then(function (withId) {
         res.send(withId);

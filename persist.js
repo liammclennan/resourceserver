@@ -10,7 +10,7 @@ function wrap(v) {
 module.exports = {
 
   insert: function (collectionName, resource) {
-    dbc.assertIsObject(resource, "resource is not an object");
+    dbc.isObject(resource, "resource is not an object");
     validateCollectionName(collectionName);
     var c = getCollection(collectionName);
     var withId = _.extend(resource, {id: nextId(c)});
