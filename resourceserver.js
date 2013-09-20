@@ -63,6 +63,11 @@ app.delete('/:collection/:id', function (req,res) {
     res.send(200);
 });
 
+app.options("*", function (req, res) {
+    res.header('Allow', 'OPTIONS,GET,PUT,POST,DELETE');
+    res.send();
+});
+
 app.listen(port);
 log.info('Backbone-server started at port %d.', port);
 
