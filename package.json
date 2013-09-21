@@ -2,7 +2,7 @@
   "author": "Liam McLennan <liam.mclennan@gmail.com>",
   "name": "resourceserver",
   "description": "Restful in-memory server for Backbone.js",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": {
     "type": "git",
     "url": "git://github.com/liammclennan/backbone-server.git"
