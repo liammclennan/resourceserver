@@ -10,7 +10,7 @@ function wrap(v) {
 module.exports = {
 
   insert: function (collectionName, resource) {
-    dbc.assertIsObject(resource, "resource is not an object");
+    dbc.isObject(resource, "resource is not an object");
     validateCollectionName(collectionName);
     var c = getCollection(collectionName);
     var withId = _.extend(resource, {id: nextId(c)});
@@ -27,9 +27,11 @@ module.exports = {
   get: function (collectionName, id) {
     validateCollectionName(collectionName);
     var c = getCollection(collectionName);
+    console.log('stringified collection:' + JSON.stringify(c));
     var resource = _.find(c, function (r) {
       return r.id == id;
     });
+    console.log(typeof resource);
     dbc.assert(resource && (typeof resource) === 'object');
     return wrap(resource);
   },
@@ -56,8 +58,8 @@ module.exports = {
 };
 
 function validateCollectionName(collectionName) {
-  dbc.assert(collectionName && (typeof collectionName) === 'string' && collectionName.length > 0, 
-    'collectionName is invalid');
+        dbc.assert(collectionName && (typeof collectionName) === 'string' && collectionName.length > 0, 
+                        'collectionName is invalid');
 }
 
 function nextId(collection) {

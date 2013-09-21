@@ -1,75 +1,80 @@
 // Implements an in-memory resource server
 
-var coffee = require('coffee-script'),
-    express = require('express'),
-    app = express(),
-    config = require('./config')
-    persist = config.use_redis ? require('./redispersist') : require('./persist'),
-    port = 3002,
-    _ = require('underscore'),
-    log = require('./logger')
-    ;
+module.exports = {
+    start: function (port) {
 
-app.configure(function () {
-    app.use(express.bodyParser());
-    app.use(allowCrossDomain);
-});
+        var coffee = require('coffee-script'),
+            express = require('express'),
+            app = express(),
+            config = require('./config')
+            persist = config.use_redis ? require('./redispersist') : require('./persist'),
+            port = port || 3002,
+            _ = require('underscore'),
+            log = require('./logger')
+            ;
 
-app.get("/:collection", function(req, res) {
-    log.info('read ' + req.params.collection);
-    
-    persist.all(req.params.collection).then(function (c) {
-        res.send(c);
-    }, function (e) {
-        res.send(500, e);
-    });
-});
+        app.configure(function () {
+            app.use(express.bodyParser());
+            app.use(allowCrossDomain);
+        });
 
-// create -> POST /collection
-app.post('/:collection', function(req, res){
-    log.info('create ' + req.params.collection + '\n' + req.body);
+        app.get("/:collection", function(req, res) {
+            log.info('read ' + req.params.collection);
 
-    persist.insert(req.params.collection, req.body).then(function (withId) {
-        res.send(withId);
-    }, function (e) {
-        res.send(500, e);
-    });        
-});
+            persist.all(req.params.collection).then(function (c) {
+                res.send(c);
+            }, function (e) {
+                res.send(500, e);
+            });
+        });
 
-// read -> GET /collection[/id]
-app.get('/:collection/:id?', function (req,res) {
-    log.info('read ' + (req.params.id || ('collection ' + req.params.collection)));
+        // create -> POST /collection
+        app.post('/:collection', function(req, res){
+            log.info('create ' + req.params.collection + '\n' + req.body);
 
-    persist.get(req.params.collection, req.params.id).then(function (el) {
-        res.send(el);
-    }, function (e) {
-        res.send(500, e);
-    });
-});
+            persist.insert(req.params.collection, req.body).then(function (withId) {
+                res.send(withId);
+            }, function (e) {
+                res.send(500, e);
+            });
+        });
 
-// update -> PUT /collection/id
-app.put('/:collection/:id', function (req,res) {
-    log.info('update ' + req.params.collection + ':' + req.params.id);
+        // read -> GET /collection[/id]
+        app.get('/:collection/:id?', function (req,res) {
+            log.info('read ' + (req.params.id || ('collection ' + req.params.collection)));
 
-    updated = persist.update(req.params.collection, req.params.id, req.body);
-    res.send(updated);
-});
+            persist.get(req.params.collection, req.params.id).then(function (el) {
+                res.send(el);
+            }, function (e) {
+                res.send(500, e);
+            });
+        });
 
-// delete -> DELETE /collection/id
-app.delete('/:collection/:id', function (req,res) {
-    log.info('delete ' + req.params.collection + ':' + req.params.id);
+        // update -> PUT /collection/id
+        app.put('/:collection/:id', function (req,res) {
+            log.info('update ' + req.params.collection + ':' + req.params.id);
 
-    persist.delete(req.params.collection, req.params.id);
-    res.send(200);
-});
+            updated = persist.update(req.params.collection, req.params.id, req.body);
+            res.send(updated);
+        });
 
-app.listen(port);
-log.info('Backbone-server started at port %d.', port);
+        // delete -> DELETE /collection/id
+        app.delete('/:collection/:id', function (req,res) {
+            log.info('delete ' + req.params.collection + ':' + req.params.id);
 
-function allowCrossDomain(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+            persist.delete(req.params.collection, req.params.id);
+            res.send(200);
+        });
 
-    next();
+        app.listen(port);
+        log.info('Resource-server started at port %d.', port);
+
+        function allowCrossDomain(req, res, next) {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+            res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+            next();
+        }
+    }
 }
