@@ -1,6 +1,5 @@
 // Implements an in-memory resource server
 
-<<<<<<< HEAD
 module.exports = {
     start: function (port) {
 
