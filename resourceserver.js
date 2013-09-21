@@ -1,7 +1,7 @@
 // Implements an in-memory resource server
 
 module.exports = {
-    start: function (port) {
+    listen: function (port) {
 
         var coffee = require('coffee-script'),
             express = require('express'),
