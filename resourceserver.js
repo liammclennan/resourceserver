@@ -1,5 +1,6 @@
 // Implements an in-memory resource server
 
+<<<<<<< HEAD
 module.exports = {
     start: function (port) {
 
@@ -68,6 +69,11 @@ module.exports = {
 
         app.listen(port);
         log.info('Resource-server started at port %d.', port);
+
+        app.options("*", function (req, res) {
+            res.header('Allow', 'OPTIONS,GET,PUT,POST,DELETE');
+            res.send();
+        });
 
         function allowCrossDomain(req, res, next) {
             res.header('Access-Control-Allow-Origin', '*');

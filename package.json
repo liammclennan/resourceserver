@@ -14,7 +14,7 @@
     "coffee-script": "*",
     "request": "*",
     "then-redis": "*",
-    "dbc": "*",
+    "dbc": "~2.0.0",
     "q": "~0.9.6"
   },
   "scripts": {
