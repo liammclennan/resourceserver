@@ -10,7 +10,7 @@
   "main": "resourceserver.js",
   "dependencies": {
     "underscore": "*",
-    "express": "*",
+    "express": "~3",
     "winston": "*",
     "coffee-script": "*",
     "request": "*",

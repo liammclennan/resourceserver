@@ -1,3 +1,3 @@
 var resourceserver = require('./resourceserver');
 
-resourceserver.start(3002);
+resourceserver.listen(3002);
